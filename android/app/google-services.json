@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "246791349145",
+    "project_id": "todolistflutterkrainet",
+    "storage_bucket": "todolistflutterkrainet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246791349145:android:06ff252950cb55f1eee908",
+        "android_client_info": {
+          "package_name": "com.example.to_do_list_for_flutter_krainet_vacancy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA79jz00lLctOGWLhUr59U1I49vjIlxwS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

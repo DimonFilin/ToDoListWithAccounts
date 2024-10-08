@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/data/auth_data.dart';
 
 class SignUp_Screen extends StatefulWidget {
   final VoidCallback show;
@@ -85,7 +86,11 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   }
 
   Widget SignUpButton() {
-    return Padding(
+    return GestureDetector(
+        onTap: () {
+      AuthenticationRemote().register(email.text, password.text, repeatPassword.text);
+    },
+    child:   Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
         ),
@@ -100,7 +105,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold)),
-        ));
+        )));
   }
 
   Widget HaveAccountText() {

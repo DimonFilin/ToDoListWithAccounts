@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/data/auth_data.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback show;
@@ -74,22 +75,27 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget LogInButton() {
-    return Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-        ),
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-              color: Colors.green, borderRadius: BorderRadius.circular(10)),
-          child: Text('Log In',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold)),
-        ));
+    return GestureDetector(
+      onTap: () {
+        AuthenticationRemote().login(email.text, password.text);
+      },
+      child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          child: Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            height: 50,
+            decoration: BoxDecoration(
+                color: Colors.green, borderRadius: BorderRadius.circular(10)),
+            child: Text('Log In',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold)),
+          )),
+    );
   }
 
   Widget NoAccountText(){
