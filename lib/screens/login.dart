@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/data/auth_data.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/screens/signUp.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/widgets/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback show;
@@ -124,54 +126,3 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-class CustomTextField extends StatefulWidget {
-  CustomTextField(
-      {super.key,
-      this.controller,
-      this.focusNode,
-      required this.hintText,
-      required this.icon});
-
-  final controller;
-  final focusNode;
-  final String hintText;
-  final IconData icon;
-
-  @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
-}
-
-class _CustomTextFieldState extends State<CustomTextField> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(15)),
-        child: TextField(
-          controller: widget.controller,
-          focusNode: widget.focusNode,
-          style: TextStyle(fontSize: 18, color: Colors.black),
-          decoration: InputDecoration(
-            prefixIcon: Icon(
-              widget.icon,
-              color: widget.focusNode.hasFocus
-                  ? Colors.green
-                  : Colors.grey.shade100,
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            hintText: widget.hintText,
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide:
-                    BorderSide(color: Colors.grey.shade100, width: 2.0)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.green, width: 2.0)),
-          ),
-        ),
-      ),
-    );
-  }
-}

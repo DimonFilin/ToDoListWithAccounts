@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/auth/auth_page.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/screens/add_note_screen.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/screens/home.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/screens/login.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/screens/signUp.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: Task_Widget(),
+      home: Home_Screen(),
     );
   }
 }
