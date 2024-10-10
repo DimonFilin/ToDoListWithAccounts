@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_for_flutter_krainet_vacancy/data/auth_data.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/data/api/auth_data.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/screens/signUp.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/widgets/custom_text_field.dart';
 

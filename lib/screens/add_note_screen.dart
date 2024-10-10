@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/data/api/firestore.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/widgets/custom_text_field.dart';
 
 class AddNote_Screen extends StatefulWidget {
@@ -69,7 +70,10 @@ class _AddNote_ScreenState extends State<AddNote_Screen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  FireStore_Database().AddNote(title.text, subtitle.text);
+                  Navigator.pop(context);
+                },
                 child: Text("Save task"),
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
