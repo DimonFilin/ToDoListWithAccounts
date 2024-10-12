@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_list_for_flutter_krainet_vacancy/data/api/firestore.dart';
-import 'package:to_do_list_for_flutter_krainet_vacancy/screens/add_note_screen.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/screens/add_note.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/widgets/stream_node.dart';
 
-import 'package:to_do_list_for_flutter_krainet_vacancy/widgets/task_widget.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -20,9 +17,9 @@ class _Home_ScreenState extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.green.shade50,
       floatingActionButton: Visibility(
-        visible: show,
+        visible: show,//If user scrolls down -> don't show this button
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(
@@ -36,14 +33,14 @@ class _Home_ScreenState extends State<Home_Screen> {
           ),
         ),
       ),
-      body: NotificationListener<UserScrollNotification>(
+      body: NotificationListener<UserScrollNotification>(//Catch Scroll
         onNotification: (notification) {
-          if (notification.direction == ScrollDirection.forward) {
+          if (notification.direction == ScrollDirection.forward) {//If user scroll up
             setState(() {
               show = true;
             });
           }
-          if (notification.direction == ScrollDirection.reverse) {
+          if (notification.direction == ScrollDirection.reverse) {//If user scroll down
             setState(() {
               show = false;
             });
@@ -53,7 +50,7 @@ class _Home_ScreenState extends State<Home_Screen> {
         child:Column(
           children: [
             StreamNode(false),
-            Text("Is Done", style: TextStyle( fontSize: 16, color: Colors.grey.shade500),),
+            Text("Is Done", style: TextStyle( fontSize: 16, color: Colors.grey.shade500),),//Under are notes with field IsDone true
             StreamNode(true)
           ],
         )

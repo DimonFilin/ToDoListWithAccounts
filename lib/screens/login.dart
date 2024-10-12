@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/data/api/auth_data.dart';
-import 'package:to_do_list_for_flutter_krainet_vacancy/screens/signUp.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/data/check/check_data_in_customtextfield.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/widgets/custom_text_field.dart';
+
+import '../ui/small_logo.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback show;
+
   LoginScreen(this.show, {super.key});
 
   @override
@@ -12,9 +15,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //Controllers to get data from text fields
   final email = TextEditingController();
   final password = TextEditingController();
 
+  //Nodes for highlighting
   final _focusNode1 = FocusNode();
   final _focusNode2 = FocusNode();
 
@@ -41,16 +46,20 @@ class _LoginScreenState extends State<LoginScreen> {
               logo(),
               SizedBox(height: 50),
               CustomTextField(
-                  controller: email,
-                  focusNode: _focusNode1,
-                  hintText: "Email",
-                  icon: Icons.email),
+                controller: email,
+                focusNode: _focusNode1,
+                hintText: "Email",
+                icon: Icons.email,
+                checkfunction: EmailCheck,
+              ),
               SizedBox(height: 10),
               CustomTextField(
-                  controller: password,
-                  focusNode: _focusNode2,
-                  hintText: "Password",
-                  icon: Icons.password),
+                controller: password,
+                focusNode: _focusNode2,
+                hintText: "Password",
+                icon: Icons.password,
+                checkfunction: PasswordCheck,
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -64,17 +73,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Padding logo() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Container(
-        width: double.infinity,
-        height: 300,
-        decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/logo.png'))),
-      ),
-    );
-  }
 
   Widget LogInButton() {
     return GestureDetector(
@@ -100,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget NoAccountText(){
+  Widget NoAccountText() {//Text with ling to Sign in page
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -108,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
           "Don't have an account? ",
           style: TextStyle(color: Colors.grey.shade700, fontSize: 14),
         ),
-        GestureDetector(
+        GestureDetector(//Clickable text
           onTap: widget.show,
           child: Text(
             "Sign UP",
@@ -125,4 +123,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

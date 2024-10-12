@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_for_flutter_krainet_vacancy/data/api/firestore.dart';
-import 'package:to_do_list_for_flutter_krainet_vacancy/screens/edit_note_screen.dart';
+import 'package:to_do_list_for_flutter_krainet_vacancy/screens/edit_note.dart';
 
 import '../model/notes_model.dart';
 
 class Task_Widget extends StatefulWidget {
-  Task_Widget(this._note,{super.key});
+  Task_Widget(this._note, {super.key});
+
   Note _note;
 
   @override
   State<Task_Widget> createState() => _Task_WidgetState();
 }
 
-
-
 class _Task_WidgetState extends State<Task_Widget> {
   @override
   Widget build(BuildContext context) {
     bool isDone = widget._note.isDone;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+      padding: const EdgeInsets.fromLTRB(5, 11, 5, 0),
       child: Container(
         width: double.infinity,
         height: 140,
@@ -52,13 +51,35 @@ class _Task_WidgetState extends State<Task_Widget> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Checkbox(
-                            value: isDone,
-                            onChanged: (value) {
-                              setState(() {
-                                isDone = !isDone;
-                              });
-                              FireStore_Database().IsDone(widget._note.id, isDone);
-                            }),
+                          // Цвет, когда чекбокс активен (отмечен)
+                          activeColor: Colors.green,
+                          // Цвет галочки внутри чекбокса, когда он активен
+                          checkColor: Colors.white,
+                          /*fillColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            // Цвет, когда чекбокс отключен
+            return Colors.grey;
+          }
+          if (states.contains(MaterialState.selected)) {
+            // Цвет, когда чекбокс активен (отмечен)
+            return Colors.green;
+          }
+          // Цвет, когда чекбокс неактивен (не отмечен)
+          return Colors.blue;
+        },
+      ),*/
+                          // Делаем форму чекбокса круглой
+                          shape: CircleBorder(),
+                          value: isDone,
+                          onChanged: (value) {
+                            setState(() {
+                              isDone = !isDone;
+                            });
+                            FireStore_Database()
+                                .IsDone(widget._note.id, isDone);
+                          },
+                        ),
                       ],
                     ),
 
@@ -74,10 +95,14 @@ class _Task_WidgetState extends State<Task_Widget> {
                         //mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            width: 90,
+                            width: 160,
                             height: 25,
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: widget._note.getTimeRemaining(
+                                          widget._note.timetodo) ==
+                                      'Просрочено'
+                                  ? Colors.red
+                                  : Colors.green,
                               borderRadius: BorderRadius.circular(18),
                             ),
                             child: Row(
@@ -91,7 +116,8 @@ class _Task_WidgetState extends State<Task_Widget> {
                                   width: 10,
                                 ),
                                 Text(
-                                  widget._note.time,
+                                  widget._note
+                                      .getTimeRemaining(widget._note.timetodo),
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -109,7 +135,10 @@ class _Task_WidgetState extends State<Task_Widget> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditNote_Screen(widget._note)));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditNote_Screen(widget._note)));
                                   },
                                   child: Container(
                                     width: 90,

@@ -12,6 +12,7 @@ class Auth_Page extends StatefulWidget {
 class _Auth_PageState extends State<Auth_Page> {
 
   bool a = true;
+  //Changing screen if need
   void to() {
     setState(() {
       a = !a;
