@@ -14,9 +14,15 @@ class Task_Widget extends StatefulWidget {
 }
 
 class _Task_WidgetState extends State<Task_Widget> {
+
   @override
   Widget build(BuildContext context) {
+    String timeInStr = widget._note
+      .getTimeRemaining(widget._note.timetodo);
     bool isDone = widget._note.isDone;
+    double timelength;
+    if(timeInStr.length< 4){timelength = timeInStr.length * 15+40;}
+    else{timelength = timeInStr.length * 11+40;}
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 11, 5, 0),
       child: Container(
@@ -40,6 +46,7 @@ class _Task_WidgetState extends State<Task_Widget> {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
                     SizedBox(height: 10),
                     Row(
@@ -50,35 +57,39 @@ class _Task_WidgetState extends State<Task_Widget> {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        Checkbox(
-                          // Цвет, когда чекбокс активен (отмечен)
-                          activeColor: Colors.green,
-                          // Цвет галочки внутри чекбокса, когда он активен
-                          checkColor: Colors.white,
-                          /*fillColor: MaterialStateProperty.resolveWith<Color>(
-        (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
-            // Цвет, когда чекбокс отключен
-            return Colors.grey;
-          }
-          if (states.contains(MaterialState.selected)) {
-            // Цвет, когда чекбокс активен (отмечен)
-            return Colors.green;
-          }
-          // Цвет, когда чекбокс неактивен (не отмечен)
-          return Colors.blue;
-        },
-      ),*/
-                          // Делаем форму чекбокса круглой
-                          shape: CircleBorder(),
-                          value: isDone,
-                          onChanged: (value) {
-                            setState(() {
-                              isDone = !isDone;
-                            });
-                            FireStore_Database()
-                                .IsDone(widget._note.id, isDone);
-                          },
+                        Transform.scale(
+                          scale: 1.3,
+                          child: Checkbox(
+
+                            // Цвет, когда чекбокс активен (отмечен)
+                            activeColor: Colors.green,
+                            // Цвет галочки внутри чекбокса, когда он активен
+                            checkColor: Colors.white,
+                            /*fillColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.disabled)) {
+                                      // Цвет, когда чекбокс отключен
+                                      return Colors.grey;
+                                    }
+                                    if (states.contains(MaterialState.selected)) {
+                                      // Цвет, когда чекбокс активен (отмечен)
+                                      return Colors.green;
+                                    }
+                                    // Цвет, когда чекбокс неактивен (не отмечен)
+                                    return Colors.blue;
+                                  },
+                                ),*/
+                            // Делаем форму чекбокса круглой
+                            shape: CircleBorder(),
+                            value: isDone,
+                            onChanged: (value) {
+                              setState(() {
+                                isDone = !isDone;
+                              });
+                              FireStore_Database()
+                                  .IsDone(widget._note.id, isDone);
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -92,21 +103,20 @@ class _Task_WidgetState extends State<Task_Widget> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
-                        //mainAxisAlignment: MainAxisAlignment.end,
+
                         children: [
                           Container(
-                            width: 160,
+                            width: timelength,
                             height: 25,
                             decoration: BoxDecoration(
-                              color: widget._note.getTimeRemaining(
-                                          widget._note.timetodo) ==
+                              color: timeInStr ==
                                       'Просрочено'
                                   ? Colors.red
                                   : Colors.green,
                               borderRadius: BorderRadius.circular(18),
                             ),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                             // crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.timer_sharp,
@@ -116,8 +126,7 @@ class _Task_WidgetState extends State<Task_Widget> {
                                   width: 10,
                                 ),
                                 Text(
-                                  widget._note
-                                      .getTimeRemaining(widget._note.timetodo),
+                                  timeInStr,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -127,11 +136,12 @@ class _Task_WidgetState extends State<Task_Widget> {
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 280 - timelength,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
                                   onTap: () {
@@ -149,7 +159,7 @@ class _Task_WidgetState extends State<Task_Widget> {
                                     ),
                                     child: Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.end,
                                       children: [
                                         SizedBox(width: 29),
                                         Text(

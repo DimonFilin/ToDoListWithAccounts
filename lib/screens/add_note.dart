@@ -69,7 +69,7 @@ class _AddNote_ScreenState extends State<AddNote_Screen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       floatingActionButton: FloatingActionButton(
-        //To get back without creating a new node
+        //To get back without creating a new note
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -109,19 +109,29 @@ class _AddNote_ScreenState extends State<AddNote_Screen> {
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+            children: [
+              ElevatedButton(
+                //Button to save note
+                onPressed: () {
+                  _selectDateTime(context);
+                  ReturnMessage = "";
+                },
+                child: Text('Select Date and Time'),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(190, 48)),
+              ),
               if (ReturnMessage.isNotEmpty)
                 Text(
                   //Show text if there is any problem with text
                   ReturnMessage,
                   style: TextStyle(color: Colors.red, fontSize: 12),
                 ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => _selectDateTime(context),
-                child: Text('Select Date and Time'),
-              ),
             ],
+          ),
+          SizedBox(
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -129,15 +139,29 @@ class _AddNote_ScreenState extends State<AddNote_Screen> {
               ElevatedButton(
                 //Button to save note
                 onPressed: () {
-                  if (_selectedDateTime != null) {
-                    FireStore_Database()
-                        .AddNote(title.text, subtitle.text, _selectedDateTime!);
-                    Navigator.pop(context);
-                  } else {
+                  if (_selectedDateTime == null) {
                     setState(() {
                       ReturnMessage = "Please fill up the time";
                       debugPrint(ReturnMessage);
                     });
+                  } else {
+                    if (title.text.isEmpty) {
+                      setState(() {
+                        ReturnMessage = "Please fill up the title";
+                        debugPrint(ReturnMessage);
+                      });
+                    } else {
+                      if (subtitle.text.isEmpty) {
+                        setState(() {
+                          ReturnMessage = "Please fill up the subtitle";
+                          debugPrint(ReturnMessage);
+                        });
+                      } else {
+                        FireStore_Database().AddNote(
+                            title.text, subtitle.text, _selectedDateTime!);
+                        Navigator.pop(context);
+                      }
+                    }
                   }
                 },
                 child: Text("Save note"),

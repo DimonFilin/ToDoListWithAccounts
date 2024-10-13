@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 class Note {
   String id;
@@ -11,6 +10,7 @@ class Note {
   Note(this.id, this.title, this.time, this.subtitle, this.isDone,
       this.timetodo);
 
+  //Convert time in string to actual time in DataTime
   DateTime parseTimeString(String timeString) {
     final parts = timeString.split(':');
     final year = int.parse(parts[0]);
@@ -22,6 +22,7 @@ class Note {
     return DateTime(year, month, day, hour, minute);
   }
 
+  //Return time in more usable type
   String getTimeRemaining(String deadline) {
     final deadlineform = parseTimeString(deadline);
     final now = DateTime.now();
@@ -34,8 +35,15 @@ class Note {
       final hours = difference.inHours % 24;
       final minutes = difference.inMinutes % 60;
       //final seconds = difference.inSeconds % 60; :${seconds}s
-
-      return '${days}d:${hours}h:${minutes}m';
+      if (days != 0) {
+        return '${days}d:${hours}h:${minutes}m';
+      } else {
+        if (hours != 0) {
+          return '${hours}h:${minutes}m';
+        } else {
+          return '${minutes}m';
+        }
+      }
     }
   }
 }

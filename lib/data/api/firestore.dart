@@ -40,7 +40,7 @@ class FireStore_Database {
         'title': title,
         'subtitle': subtitle,
         'isDone': false,
-        'time': '${data.day}:${data.hour}:${data.minute}',
+        'time': '${data.year}:${data.month}:${data.day}:${data.hour}:${data.minute}',
         'timetodo': '${data2.year}:${data2.month}:${data2.day}:${data2.hour}:${data2.minute}',
 
       });
@@ -58,9 +58,9 @@ class FireStore_Database {
         final data = doc.data() as Map<String, dynamic>;
         return Note(
           data['id'],
-          data['subtitle'],
-          data['time'],
           data['title'],
+          data['time'],
+          data['subtitle'],
           data['isDone'],
           data['timetodo']
         );
@@ -73,11 +73,11 @@ class FireStore_Database {
   }
 
   //Stream to get notes
-  Stream<QuerySnapshot> stream(bool isDone) {
+  Stream<QuerySnapshot> stream() {
     return _firestore
         .collection('users')
         .doc(_auth.currentUser!.uid)
-        .collection('notes').where('isDone', isEqualTo: isDone)
+        .collection('notes')
         .snapshots();
   }
 
@@ -106,7 +106,7 @@ class FireStore_Database {
           .doc(_auth.currentUser!.uid)
           .collection('notes')
           .doc(uuid)
-          .update({'title': title, 'subtitle': subtitle, 'timetodo': '${data2.day}:${data2.hour}:${data2.minute}',});
+          .update({'title': title, 'subtitle': subtitle, 'timetodo': '${data2.year}:${data2.month}:${data2.day}:${data2.hour}:${data2.minute}',});
       return true;
     } catch (e) {//In case, there is some error, when updating notes
       print(e);
